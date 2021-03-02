@@ -8,7 +8,7 @@ class Mover{
         this.y = y;
         this.width = width;
         this.height = height;
-        this.image = image;
+        this.image = "../img/Paper.png";
         this.target = null;
 
         //vairables related to movement
@@ -127,40 +127,59 @@ class Mover{
         else
             this.moveState = "wander";
     }
+
+    Draw(){
+        ctx.save();
+        ctx.translate(this.x,this.y);
+        ctx.drawImage(this.image, -this.width / 2, -this.height / 2, this.width, this.height);
+        ctx.restore();
+    }
 }
 
 export class Paper extends Mover{
     constructor(ctx, x = 0, y = 0, width = 15, height = 15, moveSpeed = 5, moveState = "wander"){
-        super(ctx, x, y, width, height, moveeSpeed, moveState);
+        super(ctx, x, y, width, height, moveSpeed, moveState);
         this.image = "../img/Paper.png";
     }
 
     Move(){
         target = utils.FindNearestMover(this.x, this.y, Rock);
-        super();
+        super.Move();
+    }
+
+    Draw(){
+        super.Draw();
     }
 }
 
 export class Rock extends Mover{
     constructor(ctx, x = 0, y = 0, width = 15, height = 15, moveSpeed = 5, moveState = "wander"){
-        super(ctx, x, y, width, height, moveeSpeed, moveState);
+        super(ctx, x, y, width, height, moveSpeed, moveState);
         this.image = "../img/Rock.png";
     }
 
     Move(){
         target = utils.FindNearestMover(this.x, this.y, Scissors);
-        super();
+        super.Move();
+    }
+
+    Draw(){
+        super.Draw();
     }
 }
 
 export class Scissors extends Mover{
     constructor(ctx, x = 0, y = 0, width = 15, height = 15, moveSpeed = 5, moveState = "wander"){
-        super(ctx, x, y, width, height, moveeSpeed, moveState);
+        super(ctx, x, y, width, height, moveSpeed, moveState);
         this.image = "../img/Scissors.png";
     }
 
     Move(){
         target = utils.FindNearestMover(this.x, this.y, Paper);
-        super();
+        super.Move();
+    }
+
+    Draw(){
+        super.Draw();
     }
 }
