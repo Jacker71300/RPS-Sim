@@ -1,12 +1,17 @@
-class mover{
-    constructor(ctx, x = 0, y = 0, width = 15, height = 15, image, moveSpeed = 5, moveState = "wander", target = null)
-    {
+import * as utils from "./utils.js";
+import * as init from "./init.js";
+
+class Mover{
+    constructor(ctx, x = 0, y = 0, width = 15, height = 15, moveSpeed = 5, moveState = "wander"){
         this.ctx = ctx;
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
         this.image = image;
+        this.target = null;
+
+        //vairables related to movement
         this.moveState = moveState;
         this.moveSpeed = 5;
         this.wanderTimeLeft = 0.0;
@@ -114,5 +119,48 @@ class mover{
             x += this.currentDirection.x * this.moveSpeed;
             y += this.currentDirection.y * this.moveSpeed;
         }
+    }
+
+    UpdateMoveState(){
+        if(this.moveState == "wander")
+            this.moveState = "seek";
+        else
+            this.moveState = "wander";
+    }
+}
+
+export class Paper extends Mover{
+    constructor(ctx, x = 0, y = 0, width = 15, height = 15, moveSpeed = 5, moveState = "wander"){
+        super(ctx, x, y, width, height, moveeSpeed, moveState);
+        //this.image = ??;
+    }
+
+    Move(){
+        target = utils.FindNearestMover(this.x, this.y, Rock);
+        super();
+    }
+}
+
+export class Rock extends Mover{
+    constructor(ctx, x = 0, y = 0, width = 15, height = 15, moveSpeed = 5, moveState = "wander"){
+        super(ctx, x, y, width, height, moveeSpeed, moveState);
+        //this.image = ??;
+    }
+
+    Move(){
+        target = utils.FindNearestMover(this.x, this.y, Scissors);
+        super();
+    }
+}
+
+export class Scissors extends Mover{
+    constructor(ctx, x = 0, y = 0, width = 15, height = 15, moveSpeed = 5, moveState = "wander"){
+        super(ctx, x, y, width, height, moveeSpeed, moveState);
+        //this.image = ??;
+    }
+
+    Move(){
+        target = utils.FindNearestMover(this.x, this.y, Paper);
+        super();
     }
 }
