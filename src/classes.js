@@ -132,7 +132,7 @@ class Mover{
 export class Paper extends Mover{
     constructor(ctx, x = 0, y = 0, width = 15, height = 15, moveSpeed = 5, moveState = "wander"){
         super(ctx, x, y, width, height, moveeSpeed, moveState);
-        //this.image = ??;
+        this.image = "../img/Paper.png";
     }
 
     Move(){
@@ -144,7 +144,7 @@ export class Paper extends Mover{
 export class Rock extends Mover{
     constructor(ctx, x = 0, y = 0, width = 15, height = 15, moveSpeed = 5, moveState = "wander"){
         super(ctx, x, y, width, height, moveeSpeed, moveState);
-        //this.image = ??;
+        this.image = "../img/Rock.png";
     }
 
     Move(){
@@ -156,7 +156,7 @@ export class Rock extends Mover{
 export class Scissors extends Mover{
     constructor(ctx, x = 0, y = 0, width = 15, height = 15, moveSpeed = 5, moveState = "wander"){
         super(ctx, x, y, width, height, moveeSpeed, moveState);
-        //this.image = ??;
+        this.image = "../img/Scissors.png";
     }
 
     Move(){
