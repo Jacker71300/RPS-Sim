@@ -133,7 +133,7 @@ export function DetectCollisions(){
         for(let r = 0; r < rockList.length; r++){
             if(Math.sqrt(Math.pow((scissorList[s].x - rockList[r].x), 2) + Math.pow((scissorList[s].y - rockList[r].y), 2)) < 
                 (scissorList[s].width + rockList[r].width) / 2){
-                paperList.push(new classes.Paper(scissorList[s].ctx, scissorList[s].x, scissorList[s].y, scissorList[s].width, scissorList[s].height, 5, "wander"))
+                rockList.push(new classes.Rock(scissorList[s].ctx, scissorList[s].x, scissorList[s].y, scissorList[s].width, scissorList[s].height, 5, "wander"))
                 scissorList.splice(s, 1);
                 return;
             }
