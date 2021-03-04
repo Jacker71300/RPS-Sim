@@ -23,7 +23,7 @@ class Mover{
         this.maxHeight = 800;
     }
 
-    move()
+    Move()
     {
         switch(this.moveState)
         {
@@ -69,35 +69,43 @@ class Mover{
         else
         {
             // Don't allow the object to leave the screen horizontally
-            if(this.x >= this.maxWidth || this.x <= 0)
+            if(this.x >= this.maxWidth)
             {
-                this.currentDirection.x = 0;
+                this.currentDirection.x = Math.random() * -1;
+            }
+            else if(this.x <= 0)
+            {
+                this.currentDirection.x = Math.random();
             }
             
             // Don't allow the object to leave the screen vertically
-            if(this.y >= this.maxHeight || this.y <= 0)
+            if(this.y >= this.maxHeight)
             {
-                this.currentDirection.y = 0;
+                this.currentDirection.y = Math.random() * -1;
+            }
+            else if(this.y <= 0)
+            {
+                this.currentDirection.y = Math.random();
             }
 
             // Move towards the specified location
             this.wanderTimeLeft -= this.currentFPS;
-            x += this.currentDirection.x * this.moveSpeed;
-            y += this.currentDirection.y * this.moveSpeed;
+            this.x += this.currentDirection.x * this.moveSpeed;
+            this.y += this.currentDirection.y * this.moveSpeed;
         }
     }
 
     Seek()
     {
-        if(target == null || target.x == null || target.y == null)
+        if(this.target == null || this.target.x == null || this.target.y == null)
         {
             this.Wander();
         }
         else
         {
             // Get heading to target
-            this.currentDirection.x = target.x - this.x;
-            this.currentDirection.y = target.y - this.y;
+            this.currentDirection.x = this.target.x - this.x;
+            this.currentDirection.y = this.target.y - this.y;
 
             // Normalize the direction
             this.currentDirection.x /= Math.abs(this.currentDirection.x) + Math.abs(this.currentDirection.y);
@@ -116,8 +124,8 @@ class Mover{
             }
 
             // Move towards the area
-            x += this.currentDirection.x * this.moveSpeed;
-            y += this.currentDirection.y * this.moveSpeed;
+            this.x += this.currentDirection.x * this.moveSpeed;
+            this.y += this.currentDirection.y * this.moveSpeed;
         }
     }
 
@@ -143,7 +151,7 @@ export class Paper extends Mover{
     }
 
     Move(){
-        target = utils.FindNearestMover(this.x, this.y, Rock);
+        this.target = utils.FindNearestMover(this.x, this.y, Rock);
         super.Move();
     }
 
@@ -159,7 +167,7 @@ export class Rock extends Mover{
     }
 
     Move(){
-        target = utils.FindNearestMover(this.x, this.y, Scissors);
+        this.target = utils.FindNearestMover(this.x, this.y, Scissors);
         super.Move();
     }
 
@@ -170,12 +178,12 @@ export class Rock extends Mover{
 
 export class Scissors extends Mover{
     constructor(ctx, x = 0, y = 0, width = 15, height = 15, moveSpeed = 5, moveState = "wander"){
-        super(ctx, x, y, width, height, moveSpeed, moveState);
+       super(ctx, x, y, width, height, moveSpeed, moveState);
        this.image = utils.getScissorsImage();
     }
 
     Move(){
-        target = utils.FindNearestMover(this.x, this.y, Paper);
+        this.target = utils.FindNearestMover(this.x, this.y, Paper);
         super.Move();
     }
 

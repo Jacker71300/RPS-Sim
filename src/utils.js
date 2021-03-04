@@ -1,9 +1,9 @@
 import * as classes from "./classes.js";
 
-let paperList = [];
-let rockList = [];
-let scissorList = [];
-let maxFindDistance = 100;
+export let paperList = [];
+export let rockList = [];
+export let scissorList = [];
+let maxFindDistance = 800;
 let ScissorImage;
 let PaperImage;
 let RockImage;
@@ -101,4 +101,42 @@ export function getPaperImage(){
 }
 export function getRockImage(){
     return RockImage;
+}
+
+export function DetectCollisions(){
+    //THIS DETECTS FOR LOSSES ONLY
+    //So the paper list checks if it collides with scissors, rock checks for collision with paper, the paper checks if it collides with rock
+    //this is still checking everything all the time, but at least it checks everything only once
+    for(let p = 0; p < paperList.length; p++){
+        for(let s = 0; s < scissorList.length; s++){
+            if(Math.sqrt(Math.pow((paperList[p].x - scissorList[s].x), 2) + Math.pow((paperList[p].y - scissorList[s].y), 2)) < 
+                (paperList[p].width + scissorList[s].width) / 2){
+                scissorList.push(new classes.Scissors(paperList[p].ctx, paperList[p].x, paperList[p].y, paperList[p].width, paperList[p].height, 5, "wander"))
+                paperList.splice(p, 1);
+                return;
+            }
+        }
+    }
+
+    for(let r = 0; r < rockList.length; r++){
+        for(let p = 0; p < paperList.length; p++){
+            if(Math.sqrt(Math.pow((rockList[r].x - paperList[p].x), 2) + Math.pow((rockList[r].y - paperList[p].y), 2)) < 
+                (rockList[r].width + paperList[p].width) / 2){
+                paperList.push(new classes.Paper(rockList[r].ctx, rockList[r].x, rockList[r].y, rockList[r].width, rockList[r].height, 5, "wander"))
+                rockList.splice(r, 1);
+                return;
+            }
+        }
+    }
+
+    for(let s = 0; s < scissorList.length; s++){
+        for(let r = 0; r < rockList.length; r++){
+            if(Math.sqrt(Math.pow((scissorList[s].x - rockList[r].x), 2) + Math.pow((scissorList[s].y - rockList[r].y), 2)) < 
+                (scissorList[s].width + rockList[r].width) / 2){
+                paperList.push(new classes.Paper(scissorList[s].ctx, scissorList[s].x, scissorList[s].y, scissorList[s].width, scissorList[s].height, 5, "wander"))
+                scissorList.splice(s, 1);
+                return;
+            }
+        }
+    }
 }

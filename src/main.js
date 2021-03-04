@@ -14,6 +14,7 @@ export function init(){
     
     //preload images
     utils.loadImages(SetUpInitialBoard);
+    loop();
 }
 
 function SetUpInitialBoard(numToAdd){
@@ -22,12 +23,48 @@ function SetUpInitialBoard(numToAdd){
     }
     if(numLoaded == 6)
     {
-        let p1 = new classes.Paper(ctx, 20, 20, 15, 15, 5, "seek");
-        let r1 = new classes.Rock(ctx, 50, 50, 15, 15, 5, "seek");
-        let s1 = new classes.Scissors(ctx,70, 70, 15, 15, 5, "seek");
+        for(let i = 0; i < 10; i++){
+            AddRandomMover("paper");
+            AddRandomMover("rock");
+            AddRandomMover("scissors");
+        }        
+    }
+}
 
-        p1.Draw();
-        r1.Draw();
-        s1.Draw();
+function loop(){
+    requestAnimationFrame(loop);
+
+    ctx.save();
+    ctx.fillStyle = 'white';
+    ctx.fillRect(0,0,canvasWidth,canvasHeight);
+    ctx.restore();
+
+    for(let p = 0; p < utils.paperList.length; p++){
+        utils.paperList[p].Draw();
+        utils.paperList[p].Move();
+    }
+
+    for(let r = 0; r < utils.rockList.length; r++){
+        utils.rockList[r].Draw();
+        utils.rockList[r].Move();
+    }
+
+    for(let s = 0; s < utils.scissorList.length; s++){
+        utils.scissorList[s].Draw();
+        utils.scissorList[s].Move();
+    }
+
+    utils.DetectCollisions();
+}
+
+function AddRandomMover(type){
+    if(type == "paper"){
+        utils.paperList.push(new classes.Paper(ctx, Math.random() * 800, Math.random() * 800, 30, 30, 5, "wander"))
+    }
+    else if(type == "rock"){
+        utils.rockList.push(new classes.Rock(ctx, Math.random() * 800, Math.random() * 800, 30, 30, 5, "wander"))
+    }
+    else if(type == "scissors"){
+        utils.scissorList.push(new classes.Scissors(ctx, Math.random() * 800, Math.random() * 800, 30, 30, 5, "wander"))
     }
 }
