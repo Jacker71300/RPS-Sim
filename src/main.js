@@ -68,3 +68,23 @@ function AddRandomMover(type){
         utils.scissorList.push(new classes.Scissors(ctx, Math.random() * 800, Math.random() * 800, 30, 30, 5, "seek"))
     }
 }
+
+function ResetBoard(){
+    if(numLoaded == 6)
+    {
+        // clear all 3 arrays
+        while(utils.paperList.length > 0)
+            utils.paperList.pop();
+        while(utils.rockList.length > 0)
+            utils.rockList.pop();
+        while(utils.scissorList.length > 0)
+            utils.scissorList.pop();
+
+        // repopulate arrays
+        for(let i = 0; i < 10; i++){
+            AddRandomMover("paper");
+            AddRandomMover("rock");
+            AddRandomMover("scissors");
+        }        
+    }
+}
