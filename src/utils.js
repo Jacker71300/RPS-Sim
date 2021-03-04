@@ -130,7 +130,7 @@ export function DetectCollisions(){
                     //check if new mover needs to be created
                     if(main.zombieMode)
                         //create new scissor with all the properties of the pervious paper
-                        scissorList.push(new classes.Scissors(paperList[p].ctx, paperList[p].x, paperList[p].y, paperList[p].width, paperList[p].height, 5, "wander"))
+                        scissorList.push(new classes.Scissors(paperList[p].ctx, paperList[p].x, paperList[p].y, paperList[p].width, paperList[p].height, 5, paperList[p].moveState))
                     //remove paper from the scene
                     paperList.splice(p, 1);
                     //leave loop to prevent off by one errors
@@ -145,7 +145,7 @@ export function DetectCollisions(){
             if(Math.sqrt(Math.pow((rockList[r].x - paperList[p].x), 2) + Math.pow((rockList[r].y - paperList[p].y), 2)) < 
                 (rockList[r].width + paperList[p].width) / 2){
                     if(main.zombieMode)
-                        paperList.push(new classes.Paper(rockList[r].ctx, rockList[r].x, rockList[r].y, rockList[r].width, rockList[r].height, 5, "wander"))
+                        paperList.push(new classes.Paper(rockList[r].ctx, rockList[r].x, rockList[r].y, rockList[r].width, rockList[r].height, 5, rockList[r].moveState))
                     
                     rockList.splice(r, 1);
                 return;
@@ -158,7 +158,7 @@ export function DetectCollisions(){
             if(Math.sqrt(Math.pow((scissorList[s].x - rockList[r].x), 2) + Math.pow((scissorList[s].y - rockList[r].y), 2)) < 
                 (scissorList[s].width + rockList[r].width) / 2){
                     if(main.zombieMode)
-                        rockList.push(new classes.Rock(scissorList[s].ctx, scissorList[s].x, scissorList[s].y, scissorList[s].width, scissorList[s].height, 5, "wander"))
+                        rockList.push(new classes.Rock(scissorList[s].ctx, scissorList[s].x, scissorList[s].y, scissorList[s].width, scissorList[s].height, 5, scissorList[s].moveState))
                 
                     scissorList.splice(s, 1);
                 return;
