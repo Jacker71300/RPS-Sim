@@ -10,12 +10,14 @@ class Mover{
         this.height = height;
         this.image = "../img/Paper.png";
         this.target = null;
-        this.avoidWeight = 5;
-        this.avoidRadius = 25;
+        this.avoidWeight = 0.1;
+        this.avoidRadius = 45;
+        this.seekWeight = 0.9;
+        this.wanderWeight = 0.9;
 
         //vairables related to movement
         this.moveState = moveState;
-        this.moveSpeed = 1;
+        this.moveSpeed = moveSpeed;
         this.wanderTimeLeft = 0.0;
         this.sitTimeLeft = 0.0;
         this.currentDirection = {x:1, y:0};
@@ -49,14 +51,24 @@ class Mover{
                 this.wanderTimeLeft = Math.random() * 10;
 
                 // Generate a random direction
-                this.currentDirection.x = Math.random() * 2 - 1;
-                this.currentDirection.y = Math.random() * 2 - 1;
+                let x = Math.random() * 2 - 1;
+                let y = Math.random() * 2 - 1;
+
+                // Normalize the direction
+                let distance = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
+                x /= distance;
+                y /= distance;
+
+                this.currentDirection.x += x * this.wanderWeight;
+                this.currentDirection.y += y * this.wanderWeight;
+
+                // Avoid others
                 this.AvoidFriends();
 
                 // Normalize the direction
                 if(Math.abs(this.currentDirection.x) + Math.abs(this.currentDirection.y) >= 1)
                 {
-                    let distance = Math.abs(this.currentDirection.x) + Math.abs(this.currentDirection.y);
+                    distance = Math.sqrt(Math.pow(this.currentDirection.x, 2) + Math.pow(this.currentDirection.y, 2));
                     this.currentDirection.x /= distance;
                     this.currentDirection.y /= distance;
                 }
@@ -104,12 +116,19 @@ class Mover{
         else
         {
             // Get heading to target
-            this.currentDirection.x = this.target.x - this.x;
-            this.currentDirection.y = this.target.y - this.y;
+            let x = this.target.x - this.x;
+            let y = this.target.y - this.y;
             this.AvoidFriends();
 
             // Normalize the direction
-            let distance = Math.abs(this.currentDirection.x) + Math.abs(this.currentDirection.y);
+            let distance = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
+            x /= distance;
+            y /= distance;
+
+            this.currentDirection.x += x * this.seekWeight;
+            this.currentDirection.y += y * this.seekWeight;
+
+            distance = Math.sqrt(Math.pow(this.currentDirection.x, 2) + Math.pow(this.currentDirection.y, 2));
             this.currentDirection.x /= distance;
             this.currentDirection.y /= distance;
 
@@ -170,7 +189,7 @@ export class Paper extends Mover{
                 let x = this.x - utils.paperList[p].x;
                 let y = this.y - utils.paperList[p].y;
 
-                let distance = Math.abs(x) + Math.abs(y);
+                let distance = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
 
                 if(distance <= this.avoidRadius)
                 {
@@ -207,7 +226,7 @@ export class Rock extends Mover{
                 let x = this.x - utils.rockList[p].x;
                 let y = this.y - utils.rockList[p].y;
 
-                let distance = Math.abs(x) + Math.abs(y);
+                let distance = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
 
                 if(distance <= this.avoidRadius)
                 {
@@ -244,7 +263,7 @@ export class Scissors extends Mover{
                 let x = this.x - utils.scissorList[p].x;
                 let y = this.y - utils.scissorList[p].y;
 
-                let distance = Math.abs(x) + Math.abs(y);
+                let distance = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
                 if(distance <= this.avoidRadius)
                 {
                     x /= distance;
