@@ -25,20 +25,8 @@ class Mover{
 
     Move()
     {
-        switch(this.moveState)
-        {
-            case "wander":
-                this.Wander();
-            break;
-            
-            case "seek":
-                this.Seek();
-            break;
-
-            case "flee":
-                // TODO: implement later
-            break;
-        }
+        this.AvoidFriends();
+        this.Seek();
     }
 
     Wander()
@@ -129,6 +117,8 @@ class Mover{
         }
     }
 
+    AvoidFriends(){}
+
     UpdateMoveState(){
         if(this.moveState == "wander")
             this.moveState = "seek";
@@ -158,6 +148,14 @@ export class Paper extends Mover{
     Draw(){
         super.Draw();
     }
+
+    /*AvoidFriends(){
+        for(let p = 0; p < utils.paperList.length; p++){
+            if(utils.paperList[p] != this){
+
+            }
+        }
+    }*/
 }
 
 export class Rock extends Mover{
