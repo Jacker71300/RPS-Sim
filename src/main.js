@@ -59,12 +59,12 @@ function loop(){
 
 function AddRandomMover(type){
     if(type == "paper"){
-        utils.paperList.push(new classes.Paper(ctx, Math.random() * 800, Math.random() * 800, 30, 30, 5, "wander"))
+        utils.paperList.push(new classes.Paper(ctx, Math.random() * 800, Math.random() * 800, 30, 30, 5, "seek"))
     }
     else if(type == "rock"){
-        utils.rockList.push(new classes.Rock(ctx, Math.random() * 800, Math.random() * 800, 30, 30, 5, "wander"))
+        utils.rockList.push(new classes.Rock(ctx, Math.random() * 800, Math.random() * 800, 30, 30, 5, "seek"))
     }
     else if(type == "scissors"){
-        utils.scissorList.push(new classes.Scissors(ctx, Math.random() * 800, Math.random() * 800, 30, 30, 5, "wander"))
+        utils.scissorList.push(new classes.Scissors(ctx, Math.random() * 800, Math.random() * 800, 30, 30, 5, "seek"))
     }
 }
