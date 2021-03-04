@@ -11,10 +11,11 @@ class Mover{
         this.image = "../img/Paper.png";
         this.target = null;
         this.avoidWeight = 5;
+        this.avoidRadius = 25;
 
         //vairables related to movement
         this.moveState = moveState;
-        this.moveSpeed = 5;
+        this.moveSpeed = 1;
         this.wanderTimeLeft = 0.0;
         this.sitTimeLeft = 0.0;
         this.currentDirection = {x:1, y:0};
@@ -42,12 +43,14 @@ class Mover{
                 // Generate a random direction
                 this.currentDirection.x = Math.random() * 2 - 1;
                 this.currentDirection.y = Math.random() * 2 - 1;
+                this.AvoidFriends();
 
                 // Normalize the direction
                 if(Math.abs(this.currentDirection.x) + Math.abs(this.currentDirection.y) >= 1)
                 {
-                    this.currentDirection.x /= Math.abs(this.currentDirection.x) + Math.abs(this.currentDirection.y);
-                    this.currentDirection.y /= Math.abs(this.currentDirection.x) + Math.abs(this.currentDirection.y);
+                    let distance = Math.abs(this.currentDirection.x) + Math.abs(this.currentDirection.y);
+                    this.currentDirection.x /= distance;
+                    this.currentDirection.y /= distance;
                 }
             }
             else
@@ -98,8 +101,9 @@ class Mover{
             this.AvoidFriends();
 
             // Normalize the direction
-            this.currentDirection.x /= Math.abs(this.currentDirection.x) + Math.abs(this.currentDirection.y);
-            this.currentDirection.y /= Math.abs(this.currentDirection.x) + Math.abs(this.currentDirection.y);
+            let distance = Math.abs(this.currentDirection.x) + Math.abs(this.currentDirection.y);
+            this.currentDirection.x /= distance;
+            this.currentDirection.y /= distance;
 
             // Don't allow the object to leave the screen horizontally
             if(this.x >= this.maxWidth || this.x <= 0)
@@ -155,8 +159,19 @@ export class Paper extends Mover{
         for(let p = 0; p < utils.paperList.length; p++){
             if(utils.paperList[p] != this){
                 // Get heading to target
-                this.currentDirection.x += this.avoidWeight / (this.x - utils.paperList[p].x);
-                this.currentDirection.y +=  this.avoidWeight / (this.y - utils.paperList[p].y);
+                let x = this.x - utils.paperList[p].x;
+                let y = this.y - utils.paperList[p].y;
+
+                let distance = Math.abs(x) + Math.abs(y);
+
+                if(distance <= this.avoidRadius)
+                {
+                    x /= distance;
+                    y /= distance;
+
+                    this.currentDirection.x += x * this.avoidWeight;
+                    this.currentDirection.y +=  y * this.avoidWeight;
+                }
             }
         }
     }
@@ -181,8 +196,19 @@ export class Rock extends Mover{
         for(let p = 0; p < utils.rockList.length; p++){
             if(utils.rockList[p] != this){
                 // Get heading to target
-                this.currentDirection.x += this.avoidWeight / (this.x - utils.rockList[p].x);
-                this.currentDirection.y +=  this.avoidWeight / (this.y - utils.rockList[p].y);
+                let x = this.x - utils.rockList[p].x;
+                let y = this.y - utils.rockList[p].y;
+
+                let distance = Math.abs(x) + Math.abs(y);
+
+                if(distance <= this.avoidRadius)
+                {
+                    x /= distance;
+                    y /= distance;
+
+                    this.currentDirection.x += x * this.avoidWeight;
+                    this.currentDirection.y +=  y * this.avoidWeight;
+                }
             }
         }
     }
@@ -207,8 +233,18 @@ export class Scissors extends Mover{
         for(let p = 0; p < utils.scissorList.length; p++){
             if(utils.scissorList[p] != this){
                 // Get heading to target
-                this.currentDirection.x += this.avoidWeight / (this.x - utils.scissorList[p].x);
-                this.currentDirection.y +=  this.avoidWeight / (this.y - utils.scissorList[p].y);
+                let x = this.x - utils.scissorList[p].x;
+                let y = this.y - utils.scissorList[p].y;
+
+                let distance = Math.abs(x) + Math.abs(y);
+                if(distance <= this.avoidRadius)
+                {
+                    x /= distance;
+                    y /= distance;
+
+                    this.currentDirection.x += x * this.avoidWeight;
+                    this.currentDirection.y +=  y * this.avoidWeight;
+                }
             }
         }
     }
