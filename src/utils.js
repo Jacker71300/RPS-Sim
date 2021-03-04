@@ -1,4 +1,5 @@
 import * as classes from "./classes.js";
+import * as main from "./main.js";
 
 export let paperList = [];
 export let rockList = [];
@@ -126,8 +127,10 @@ export function DetectCollisions(){
             //if the distance between the centers of the two movers is less than their combined widths, they're colliding
             if(Math.sqrt(Math.pow((paperList[p].x - scissorList[s].x), 2) + Math.pow((paperList[p].y - scissorList[s].y), 2)) < 
                 (paperList[p].width + scissorList[s].width) / 2){
-                    //create new scissor with all the properties of the pervious paper
-                    scissorList.push(new classes.Scissors(paperList[p].ctx, paperList[p].x, paperList[p].y, paperList[p].width, paperList[p].height, 5, "wander"))
+                    //check if new mover needs to be created
+                    if(main.zombieMode)
+                        //create new scissor with all the properties of the pervious paper
+                        scissorList.push(new classes.Scissors(paperList[p].ctx, paperList[p].x, paperList[p].y, paperList[p].width, paperList[p].height, 5, "wander"))
                     //remove paper from the scene
                     paperList.splice(p, 1);
                     //leave loop to prevent off by one errors
@@ -141,8 +144,10 @@ export function DetectCollisions(){
         for(let p = 0; p < paperList.length; p++){
             if(Math.sqrt(Math.pow((rockList[r].x - paperList[p].x), 2) + Math.pow((rockList[r].y - paperList[p].y), 2)) < 
                 (rockList[r].width + paperList[p].width) / 2){
-                paperList.push(new classes.Paper(rockList[r].ctx, rockList[r].x, rockList[r].y, rockList[r].width, rockList[r].height, 5, "wander"))
-                rockList.splice(r, 1);
+                    if(main.zombieMode)
+                        paperList.push(new classes.Paper(rockList[r].ctx, rockList[r].x, rockList[r].y, rockList[r].width, rockList[r].height, 5, "wander"))
+                    
+                    rockList.splice(r, 1);
                 return;
             }
         }
@@ -152,8 +157,10 @@ export function DetectCollisions(){
         for(let r = 0; r < rockList.length; r++){
             if(Math.sqrt(Math.pow((scissorList[s].x - rockList[r].x), 2) + Math.pow((scissorList[s].y - rockList[r].y), 2)) < 
                 (scissorList[s].width + rockList[r].width) / 2){
-                rockList.push(new classes.Rock(scissorList[s].ctx, scissorList[s].x, scissorList[s].y, scissorList[s].width, scissorList[s].height, 5, "wander"))
-                scissorList.splice(s, 1);
+                    if(main.zombieMode)
+                        rockList.push(new classes.Rock(scissorList[s].ctx, scissorList[s].x, scissorList[s].y, scissorList[s].width, scissorList[s].height, 5, "wander"))
+                
+                    scissorList.splice(s, 1);
                 return;
             }
         }

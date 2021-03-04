@@ -27,7 +27,15 @@ class Mover{
     Move()
     {
         this.AvoidFriends();
-        this.Seek();
+        switch(this.moveState){
+            case "wander":
+                this.Wander();
+                break;
+            case "seek":
+                this.Seek();
+                break;
+        }
+
     }
 
     Wander()
