@@ -5,6 +5,7 @@ let ctx, canvas;
 let canvasWidth = 800;
 let canvasHeight = 800;
 let numLoaded = 0;
+export let zombieMode = true;
 
 export function init(){
     canvas = document.querySelector('canvas');
@@ -14,6 +15,11 @@ export function init(){
     
     //preload images
     utils.loadImages(SetUpInitialBoard);
+
+    document.querySelector('#reset').onclick = function(){ResetBoard()};
+    document.querySelector('#zombieMode').onclick = function(){ToggleZombieMode()};
+    document.querySelector('#wanderButton').onclick = function(){ChangeSeekMode()};
+
     loop();
 }
 
@@ -86,5 +92,23 @@ function ResetBoard(){
             AddRandomMover("rock");
             AddRandomMover("scissors");
         }        
+    }
+}
+
+function ToggleZombieMode(){
+    zombieMode = !zombieMode;
+}
+
+function ChangeSeekMode(){
+    for(let i = 0; i < utils.paperList.length; i++){
+        utils.paperList[i].UpdateMoveState();
+    }
+
+    for(let i = 0; i < utils.rockList.length; i++){
+        utils.rockList[i].UpdateMoveState();
+    }
+
+    for(let i = 0; i < utils.scissorList.length; i++){
+        utils.scissorList[i].UpdateMoveState();
     }
 }
