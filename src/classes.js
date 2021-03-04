@@ -155,8 +155,8 @@ export class Paper extends Mover{
         for(let p = 0; p < utils.paperList.length; p++){
             if(utils.paperList[p] != this){
                 // Get heading to target
-                this.currentDirection.x += this.avoidWeight / (this.x - this.utils.paperList[p].x);
-                this.currentDirection.y +=  this.avoidWeight / (this.y - this.utils.paperList[p].y);
+                this.currentDirection.x += this.avoidWeight / (this.x - utils.paperList[p].x);
+                this.currentDirection.y +=  this.avoidWeight / (this.y - utils.paperList[p].y);
             }
         }
     }
@@ -181,8 +181,8 @@ export class Rock extends Mover{
         for(let p = 0; p < utils.rockList.length; p++){
             if(utils.rockList[p] != this){
                 // Get heading to target
-                this.currentDirection.x += this.avoidWeight / (this.x - this.utils.rockList[p].x);
-                this.currentDirection.y +=  this.avoidWeight / (this.y - this.utils.rockList[p].y);
+                this.currentDirection.x += this.avoidWeight / (this.x - utils.rockList[p].x);
+                this.currentDirection.y +=  this.avoidWeight / (this.y - utils.rockList[p].y);
             }
         }
     }
@@ -207,8 +207,8 @@ export class Scissors extends Mover{
         for(let p = 0; p < utils.scissorList.length; p++){
             if(utils.scissorList[p] != this){
                 // Get heading to target
-                this.currentDirection.x += this.avoidWeight / (this.x - this.utils.rockList[p].x);
-                this.currentDirection.y +=  this.avoidWeight / (this.y - this.utils.rockList[p].y);
+                this.currentDirection.x += this.avoidWeight / (this.x - utils.rockList[p].x);
+                this.currentDirection.y +=  this.avoidWeight / (this.y - utils.rockList[p].y);
             }
         }
     }
