@@ -5,7 +5,8 @@ let ctx, canvas;
 let canvasWidth = 800;
 let canvasHeight = 800;
 let numLoaded = 0;
-export let zombieMode = true;
+let currentMoveState = "seek";
+export let zombieMode = false;
 
 export function init(){
     canvas = document.querySelector('canvas');
@@ -16,6 +17,7 @@ export function init(){
     //preload images
     utils.loadImages(SetUpInitialBoard);
 
+    //link controls from index
     document.querySelector('#reset').onclick = function(){ResetBoard()};
     document.querySelector('#zombieMode').onclick = function(){ToggleZombieMode()};
     document.querySelector('#wanderButton').onclick = function(){ChangeSeekMode()};
@@ -24,11 +26,13 @@ export function init(){
 }
 
 function SetUpInitialBoard(numToAdd){
+    //this verifies that all images are loaded before adding movers
     if(numLoaded != 6){
         numLoaded += numToAdd;
     }
     if(numLoaded == 6)
     {
+        //create 10 of each type of mover
         for(let i = 0; i < 10; i++){
             AddRandomMover("paper");
             AddRandomMover("rock");
@@ -40,11 +44,15 @@ function SetUpInitialBoard(numToAdd){
 function loop(){
     requestAnimationFrame(loop);
 
+    //reset background (wipe frame)
     ctx.save();
     ctx.fillStyle = 'white';
     ctx.fillRect(0,0,canvasWidth,canvasHeight);
     ctx.restore();
 
+    //loop through each list
+    //draw the mover
+    //then move it to prepare for next frame
     for(let p = 0; p < utils.paperList.length; p++){
         utils.paperList[p].Draw();
         utils.paperList[p].Move();
@@ -64,14 +72,15 @@ function loop(){
 }
 
 function AddRandomMover(type){
+    //randomly assigns x and y value to new mover of specified type
     if(type == "paper"){
-        utils.paperList.push(new classes.Paper(ctx, Math.random() * 800, Math.random() * 800, 30, 30, 5, "seek"))
+        utils.paperList.push(new classes.Paper(ctx, Math.random() * 800, Math.random() * 800, 30, 30, 5, currentMoveState))
     }
     else if(type == "rock"){
-        utils.rockList.push(new classes.Rock(ctx, Math.random() * 800, Math.random() * 800, 30, 30, 5, "seek"))
+        utils.rockList.push(new classes.Rock(ctx, Math.random() * 800, Math.random() * 800, 30, 30, 5, currentMoveState))
     }
     else if(type == "scissors"){
-        utils.scissorList.push(new classes.Scissors(ctx, Math.random() * 800, Math.random() * 800, 30, 30, 5, "seek"))
+        utils.scissorList.push(new classes.Scissors(ctx, Math.random() * 800, Math.random() * 800, 30, 30, 5, currentMoveState))
     }
 }
 
@@ -99,6 +108,7 @@ function ToggleZombieMode(){
     zombieMode = !zombieMode;
 }
 
+//this changes the internal seek modes of all the movers, but also tracks the universal move state for the whole scene, for resetting purposes
 function ChangeSeekMode(){
     for(let i = 0; i < utils.paperList.length; i++){
         utils.paperList[i].UpdateMoveState();
@@ -111,4 +121,9 @@ function ChangeSeekMode(){
     for(let i = 0; i < utils.scissorList.length; i++){
         utils.scissorList[i].UpdateMoveState();
     }
+
+    if(currentMoveState == "wander")
+        currentMoveState = "seek"
+    else
+        currentMoveState = "wander";
 }
