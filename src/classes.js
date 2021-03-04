@@ -10,6 +10,7 @@ class Mover{
         this.height = height;
         this.image = "../img/Paper.png";
         this.target = null;
+        this.avoidWeight = 5;
 
         //vairables related to movement
         this.moveState = moveState;
@@ -94,6 +95,7 @@ class Mover{
             // Get heading to target
             this.currentDirection.x = this.target.x - this.x;
             this.currentDirection.y = this.target.y - this.y;
+            this.AvoidFriends();
 
             // Normalize the direction
             this.currentDirection.x /= Math.abs(this.currentDirection.x) + Math.abs(this.currentDirection.y);
@@ -149,13 +151,15 @@ export class Paper extends Mover{
         super.Draw();
     }
 
-    /*AvoidFriends(){
+    AvoidFriends(){
         for(let p = 0; p < utils.paperList.length; p++){
             if(utils.paperList[p] != this){
-
+                // Get heading to target
+                this.currentDirection.x += this.avoidWeight / (this.x - this.utils.paperList[i].x);
+                this.currentDirection.y +=  this.avoidWeight / (this.y - this.utils.paperList[i].y);
             }
         }
-    }*/
+    }
 }
 
 export class Rock extends Mover{
