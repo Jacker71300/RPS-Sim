@@ -207,8 +207,8 @@ export class Scissors extends Mover{
         for(let p = 0; p < utils.scissorList.length; p++){
             if(utils.scissorList[p] != this){
                 // Get heading to target
-                this.currentDirection.x += this.avoidWeight / (this.x - utils.rockList[p].x);
-                this.currentDirection.y +=  this.avoidWeight / (this.y - utils.rockList[p].y);
+                this.currentDirection.x += this.avoidWeight / (this.x - utils.scissorList[p].x);
+                this.currentDirection.y +=  this.avoidWeight / (this.y - utils.scissorList[p].y);
             }
         }
     }
