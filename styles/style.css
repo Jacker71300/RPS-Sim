@@ -4,7 +4,7 @@
 }
 
 #controls{
-    display: flex;
+    display: inline-flex;
     flex-direction: column;
     justify-content: space-between;
 }
@@ -17,16 +17,28 @@ canvas{
 }
 
 .toggleBox{
-    border:1px solid black;
-    display: flex;
+    border: 1px solid black;
+    width: 225px;
+    display: inline-flex;
     flex-direction: row;
-    justify-content:space-around;
+    padding: 5px;
+}
+
+.toggleBox > p{
+    padding: 5px;
+    margin: 10px;
+}
+
+input{
+    width: 4em;
 }
 
 .radioBox{
     border: 1px solid black;
-    display: flex;
+    width: 225px;
+    display: inline-flex;
     flex-direction: row;
+    padding: 5px;
     justify-content: space-evenly;
 }
 
@@ -103,7 +115,7 @@ canvas{
   .sliderInput {
     -webkit-appearance: none;  /* Override default CSS styles */
     appearance: none;
-    width: 500px; /* Full-width */
+    width: 150px; /* Full-width */
     height: 25px; /* Specified height */
     background: #d3d3d3; /* Grey background */
     outline: none; /* Remove outline */
@@ -123,14 +135,14 @@ canvas{
     appearance: none;
     width: 25px; /* Set a specific slider handle width */
     height: 25px; /* Slider handle height */
-    background: #4CAF50; /* Green background */
+    background: #2196F3; /* Green background */
     cursor: pointer; /* Cursor on hover */
   }
   
   .sliderInput::-moz-range-thumb {
     width: 25px; /* Set a specific slider handle width */
     height: 25px; /* Slider handle height */
-    background: #4CAF50; /* Green background */
+    background: #2196F3; /* Green background */
     cursor: pointer; /* Cursor on hover */
   }
   /*end of W3schools tutorial code*/

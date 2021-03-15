@@ -9,12 +9,14 @@
     <div class = "wrapper">
         <canvas width="800" height="800" id="canvas"></canvas>
         <section id="controls">
-            <div class="toggleBox">
-                <label class="switch">
-                    <input type="checkbox" id="wanderButton">
-                    <span class="slider round"></span>
-                </label>
-                <p>Chase Mode</p>
+            <div>
+                <div class="toggleBox">
+                    <label class="switch">
+                        <input type="checkbox" id="wanderButton">
+                        <span class="slider round"></span>
+                    </label>
+                    <p>Chase Mode</p>
+                </div>
             </div>
             <div>
                 <div class="toggleBox">
@@ -31,14 +33,14 @@
                 <button id="clear">Clear</button>
             </div>
             <div class="resizeBoxes">
-                <p>resize canvas</p>
-            </div>
+                <button id="spawn">Resise Canvas <input type="number" id="canvasX" name="canvasX" value="800"> x  <input type="number" id="canvasY" name="canvasY" value="800">
+            </button>            </div>
             <div class="slidecontainer">
-                <p>moveSpeed</p>
+                <p id="moveSpeedOutput">Move Speed: </p>
                 <input type="range" min="1" max="10" value="1" class="sliderInput" id="moveSpeed">
             </div>
             <div class="slidecontainer">
-                <p>detectionRange</p>
+                <p id="detectionRangeOutput">Detection Range: </p>
                 <input type="range" min="1" max="800" value="800" class="sliderInput" id="detectionRange">
             </div>
             <div class="radioBox">
@@ -46,24 +48,21 @@
                     <input type="checkbox" id="drawButton">
                     <span class="slider round"></span>
                 </label>
-                <input type="radio" id="drawOptions" value="rock">
-                <label for="rock">Rock</label><br>
-                <input type="radio" id="drawOptions" value="paper">
-                <label for="scissors">Paper</label><br>
-                <input type="radio" id="drawOptions" value="scissors">
-                <label for="scissors">Scissors</label><br>
+                <p>Draw New </p>
+                <select name="spawnOptions">
+                    <option value="Rock">Rocks</option>
+                    <option value="Paper">Papers</option>
+                    <option value="Scissors">Scissors</option>
+                </select>
 
-                <p>Draw New Things</p>
             </div>
             <div class="radioBox">
-                <button id="spawn">Spawn x amount </button>
-                <input type="radio" id="spawnOptions" value="rock">
-                <label for="rock">Rock</label><br>
-                 <input type="radio" id="spawnOptions" value="paper">
-                <label for="scissors">Paper</label><br>
-                <input type="radio" id="spawnOptions" value="scissors">
-                <label for="scissors">Scissors</label><br>
-
+                <button id="spawn">Spawn <input type="number" id="numToSpawn" name="spawnNumber" value="20"> <select name="spawnOptions">
+                        <option value="Rock">Rocks</option>
+                        <option value="Paper">Papers</option>
+                        <option value="Scissors">Scissors</option>
+                    </select>
+                </button>
             </div>
         </section>
     </div>
