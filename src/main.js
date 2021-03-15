@@ -5,8 +5,10 @@ let ctx, canvas;
 let canvasWidth = 800;
 let canvasHeight = 800;
 let numLoaded = 0;
-let currentMoveState = "seek";
-let paused = false;
+let currentMoveState = "wander";
+let globalMoveSpeed = 1;
+let globalDetectionRange = 800;
+let paused = true;
 export let zombieMode = false;
 
 export function init(){
@@ -19,9 +21,12 @@ export function init(){
     utils.loadImages(SetUpInitialBoard);
 
     //link controls from index
-    document.querySelector('#reset').onclick = function(){ResetBoard()};
+    document.querySelector('#clear').onclick = function(){ClearBoard()};
     document.querySelector('#zombieMode').onclick = function(){ToggleZombieMode()};
     document.querySelector('#wanderButton').onclick = function(){ChangeSeekMode()};
+    document.querySelector('#pausePlay').onclick = function(){paused = !paused};
+    document.querySelector('#moveSpeed').onchange = function(){ChangeGlobalMoveSpeed(document.getElementById("moveSpeed").value)};
+    document.querySelector('#detectionRange').onchange = function(){utils.maxFindDistance = document.getElementById("detectionRange").value};
 
     loop();
 }
@@ -33,19 +38,17 @@ function SetUpInitialBoard(numToAdd){
     }
     if(numLoaded == 6)
     {
-        //create 10 of each type of mover
-        for(let i = 0; i < 10; i++){
-            AddRandomMover("paper");
-            AddRandomMover("rock");
-            AddRandomMover("scissors");
-        }        
+        AddRandomMover("paper", 10);
+        AddRandomMover("rock", 10);
+        AddRandomMover("scissors", 10);      
     }
 }
 
 function loop(){
     requestAnimationFrame(loop);
 
-        if(!paused){
+    if(!paused){
+        11
         //reset background (wipe frame)
         ctx.save();
         ctx.fillStyle = 'white';
@@ -77,20 +80,20 @@ function loop(){
 function AddRandomMover(type, num){
     //randomly assigns x and y value to new mover of specified type
     if(type == "paper"){
-        for(let i; i < num; i++)
-            utils.paperList.push(new classes.Paper(ctx, Math.random() * 800, Math.random() * 800, 30, 30, 5, currentMoveState))
+        for(let i = 0; i < num; i++)
+            utils.paperList.push(new classes.Paper(ctx, Math.random() * 800, Math.random() * 800, 30, 30, globalMoveSpeed, currentMoveState))
     }
     else if(type == "rock"){
-        for(let i; i < num; i++)
-            utils.rockList.push(new classes.Rock(ctx, Math.random() * 800, Math.random() * 800, 30, 30, 5, currentMoveState))
+        for(let i = 0; i < num; i++)
+            utils.rockList.push(new classes.Rock(ctx, Math.random() * 800, Math.random() * 800, 30, 30, globalMoveSpeed, currentMoveState))
     }
     else if(type == "scissors"){
-        for(let i; i < num; i++)
-            utils.scissorList.push(new classes.Scissors(ctx, Math.random() * 800, Math.random() * 800, 30, 30, 5, currentMoveState))
+        for(let i = 0; i < num; i++)
+            utils.scissorList.push(new classes.Scissors(ctx, Math.random() * 800, Math.random() * 800, 30, 30, globalMoveSpeed, currentMoveState))
     }
 }
 
-function ResetBoard(){
+function ClearBoard(){
     if(numLoaded == 6)
     {
         // clear all 3 arrays
@@ -99,14 +102,7 @@ function ResetBoard(){
         while(utils.rockList.length > 0)
             utils.rockList.pop();
         while(utils.scissorList.length > 0)
-            utils.scissorList.pop();
-
-        // repopulate arrays
-        for(let i = 0; i < 10; i++){
-            AddRandomMover("paper");
-            AddRandomMover("rock");
-            AddRandomMover("scissors");
-        }        
+            utils.scissorList.pop();      
     }
 }
 
@@ -132,4 +128,16 @@ function ChangeSeekMode(){
         currentMoveState = "seek"
     else
         currentMoveState = "wander";
+}
+
+function ChangeGlobalMoveSpeed(speed){
+    globalMoveSpeed = speed;
+        for(let i = 0; i < utils.paperList.length; i++)
+            utils.paperList[i].moveSpeed = globalMoveSpeed;
+        
+        for(let i = 0; i < utils.rockList.length; i++)
+            utils.rockList[i].moveSpeed = globalMoveSpeed;
+        
+        for(let i = 0; i < utils.scissorList.length; i++)
+            utils.scissorList[i].moveSpeed = globalMoveSpeed;
 }
