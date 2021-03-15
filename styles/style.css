@@ -20,11 +20,14 @@ canvas{
     border:1px solid black;
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content:space-around;
 }
 
-.toggleBox p {
-    float: right;
+.radioBox{
+    border: 1px solid black;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
 }
 
 /* Tutorial code from W3schools */
