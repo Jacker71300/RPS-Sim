@@ -1,6 +1,133 @@
+.wrapper{
+    display: grid;
+    grid-template-columns: 850px 1fr 1fr 1fr 1fr 1fr;
+}
+
+#controls{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
 canvas{
     border:1px solid gray;
     margin-left: 10px;
     margin-top: 10px;
     box-shadow: 3px 3px 6px rgba(0,0,0,0.5);
 }
+
+.toggleBox{
+    border:1px solid black;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.toggleBox p {
+    float: right;
+}
+
+/* Tutorial code from W3schools */
+/* The switch - the box around the slider */
+.switch{
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 24px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  /* The slider */
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 12;
+    left: 0;
+    right: 0;
+    bottom: -12;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  input:checked + .slider {
+    background-color: #2196F3;
+  }
+  
+  input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+  }
+  
+  input:checked + .slider:before {
+    -webkit-transform: translateX(14px);
+    -ms-transform: translateX(14px);
+    transform: translateX(14px);
+  }
+  
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 34px;
+  }
+  
+  .slider.round:before {
+    border-radius: 50%;
+  }
+
+  /************************Slider Inputs**************/
+  .slidecontainer {
+    width: 500px; /* Width of the outside container */
+  }
+  
+  /* The slider itself */
+  .sliderInput {
+    -webkit-appearance: none;  /* Override default CSS styles */
+    appearance: none;
+    width: 500px; /* Full-width */
+    height: 25px; /* Specified height */
+    background: #d3d3d3; /* Grey background */
+    outline: none; /* Remove outline */
+    opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+    transition: opacity .2s;
+  }
+  
+  /* Mouse-over effects */
+  .sliderInput:hover {
+    opacity: 1; /* Fully shown on mouse-over */
+  }
+  
+  /* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+  .sliderInput::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    width: 25px; /* Set a specific slider handle width */
+    height: 25px; /* Slider handle height */
+    background: #4CAF50; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+  }
+  
+  .sliderInput::-moz-range-thumb {
+    width: 25px; /* Set a specific slider handle width */
+    height: 25px; /* Slider handle height */
+    background: #4CAF50; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+  }
+  /*end of W3schools tutorial code*/

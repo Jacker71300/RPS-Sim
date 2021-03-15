@@ -74,13 +74,13 @@ function loop(){
 function AddRandomMover(type){
     //randomly assigns x and y value to new mover of specified type
     if(type == "paper"){
-        utils.paperList.push(new classes.Paper(ctx, Math.random() * 800, Math.random() * 800, 30, 30, 5, currentMoveState))
+        utils.paperList.push(new classes.Paper(ctx, Math.random() * 800, Math.random() * 800, 30, 30, 1, currentMoveState))
     }
     else if(type == "rock"){
-        utils.rockList.push(new classes.Rock(ctx, Math.random() * 800, Math.random() * 800, 30, 30, 5, currentMoveState))
+        utils.rockList.push(new classes.Rock(ctx, Math.random() * 800, Math.random() * 800, 30, 30, 1, currentMoveState))
     }
     else if(type == "scissors"){
-        utils.scissorList.push(new classes.Scissors(ctx, Math.random() * 800, Math.random() * 800, 30, 30, 5, currentMoveState))
+        utils.scissorList.push(new classes.Scissors(ctx, Math.random() * 800, Math.random() * 800, 30, 30, 1, currentMoveState))
     }
 }
 
