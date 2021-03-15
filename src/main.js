@@ -27,6 +27,9 @@ export function init(){
     document.querySelector('#pausePlay').onclick = function(){paused = !paused};
     document.querySelector('#moveSpeed').onchange = function(){ChangeGlobalMoveSpeed(document.getElementById("moveSpeed").value)};
     document.querySelector('#detectionRange').onchange = function(){utils.maxFindDistance = document.getElementById("detectionRange").value};
+    document.querySelector('#spawn').onclick = function(){AddRandomMovers(document.getElementById("spawnOptionsRandom").value, document.getElementById("numToSpawn").value)};
+    document.querySelector('#canvasResize').onchange = function(){canvas.width = document.getElementById("canvasX").value; canvas.height = document.getElementById("canvasY").value};
+    canvas.onclick = canvasClicked;
 
     loop();
 }
@@ -38,58 +41,61 @@ function SetUpInitialBoard(numToAdd){
     }
     if(numLoaded == 6)
     {
-        AddRandomMover("paper", 10);
-        AddRandomMover("rock", 10);
-        AddRandomMover("scissors", 10);      
+        AddRandomMovers("paper", 10);
+        AddRandomMovers("rock", 10);
+        AddRandomMovers("scissors", 10);      
     }
 }
 
 function loop(){
     requestAnimationFrame(loop);
 
-    if(!paused){
-        11
-        //reset background (wipe frame)
-        ctx.save();
-        ctx.fillStyle = 'white';
-        ctx.fillRect(0,0,canvasWidth,canvasHeight);
-        ctx.restore();
+    11
+    //reset background (wipe frame)
+    ctx.save();
+    ctx.fillStyle = 'white';
+    ctx.fillRect(0,0,canvasWidth,canvasHeight);
+    ctx.restore();
 
-        //loop through each list
-        //draw the mover
-        //then move it to prepare for next frame
-        for(let p = 0; p < utils.paperList.length; p++){
-            utils.paperList[p].Draw();
+    //loop through each list
+    //draw the mover
+    //then move it to prepare for next frame
+    for(let p = 0; p < utils.paperList.length; p++){
+        utils.paperList[p].Draw();
+        
+        if(!paused)
             utils.paperList[p].Move();
-        }
-
-        for(let r = 0; r < utils.rockList.length; r++){
-            utils.rockList[r].Draw();
-            utils.rockList[r].Move();
-        }
-
-        for(let s = 0; s < utils.scissorList.length; s++){
-            utils.scissorList[s].Draw();
-            utils.scissorList[s].Move();
-        }
-
-        utils.DetectCollisions();
     }
+
+    for(let r = 0; r < utils.rockList.length; r++){
+        utils.rockList[r].Draw();
+        if(!paused)
+            utils.rockList[r].Move();
+    }
+
+    for(let s = 0; s < utils.scissorList.length; s++){
+        utils.scissorList[s].Draw();
+        if(!paused)
+            utils.scissorList[s].Move();
+    }
+
+    if(!paused)
+        utils.DetectCollisions();
 }
 
-function AddRandomMover(type, num){
+function AddRandomMovers(type, num){
     //randomly assigns x and y value to new mover of specified type
     if(type == "paper"){
         for(let i = 0; i < num; i++)
-            utils.paperList.push(new classes.Paper(ctx, Math.random() * 800, Math.random() * 800, 30, 30, globalMoveSpeed, currentMoveState))
+            utils.paperList.push(new classes.Paper(ctx, Math.random() * canvas.width, Math.random() * canvas.height, 30, 30, globalMoveSpeed, currentMoveState))
     }
     else if(type == "rock"){
         for(let i = 0; i < num; i++)
-            utils.rockList.push(new classes.Rock(ctx, Math.random() * 800, Math.random() * 800, 30, 30, globalMoveSpeed, currentMoveState))
+            utils.rockList.push(new classes.Rock(ctx, Math.random() * canvas.width, Math.random() * canvas.height, 30, 30, globalMoveSpeed, currentMoveState))
     }
     else if(type == "scissors"){
         for(let i = 0; i < num; i++)
-            utils.scissorList.push(new classes.Scissors(ctx, Math.random() * 800, Math.random() * 800, 30, 30, globalMoveSpeed, currentMoveState))
+            utils.scissorList.push(new classes.Scissors(ctx, Math.random() * canvas.width, Math.random() * canvas.height, 30, 30, globalMoveSpeed, currentMoveState))
     }
 }
 
@@ -140,4 +146,24 @@ function ChangeGlobalMoveSpeed(speed){
         
         for(let i = 0; i < utils.scissorList.length; i++)
             utils.scissorList[i].moveSpeed = globalMoveSpeed;
+}
+
+function canvasClicked(e){
+    let rect = e.target.getBoundingClientRect();
+    let mouseX = e.clientX - rect.x;
+    let mouseY = e.clientY - rect.y;
+    console.log(mouseX,mouseY);
+    
+    if(document.getElementById("spawnOptionsMouse").value == "paper"){
+        console.log("paper");
+        utils.paperList.push(new classes.Paper(ctx, mouseX, mouseY, 30, 30, globalMoveSpeed, currentMoveState));
+    }
+    else if(document.getElementById("spawnOptionsMouse").value == "rock"){
+        console.log("rock");
+        utils.rockList.push(new classes.Rock(ctx, mouseX, mouseY, 30, 30, globalMoveSpeed, currentMoveState));
+    }
+    else if(document.getElementById("spawnOptionsMouse").value == "scissors"){
+        console.log("scissors");
+        utils.scissorList.push(new classes.Scissors(ctx, mouseX, mouseY, 30, 30, globalMoveSpeed, currentMoveState));
+    }
 }

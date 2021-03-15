@@ -4,7 +4,7 @@ import * as main from "./main.js";
 export let paperList = [];
 export let rockList = [];
 export let scissorList = [];
-let maxFindDistance = 800;
+export let maxFindDistance = 800;
 let ScissorImage;
 let PaperImage;
 let RockImage;
