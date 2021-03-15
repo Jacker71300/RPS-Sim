@@ -29,7 +29,7 @@ class Mover{
 
     Move()
     {
-        this.AvoidFriends();
+        //this.AvoidFriends();
         switch(this.moveState){
             case "wander":
                 this.Wander();

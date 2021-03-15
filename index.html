@@ -6,17 +6,45 @@
     <link rel="stylesheet" href="styles/style.css">
 </head>
 <body>
-    <canvas width="800" height="800"></canvas>
-    <section id="controls">
-        <div>
-            <button id="wanderButton">Toggle Wander/Seek</button>
-        </div>
-        <div>
-            <button id="zombieMode">Toggle Zombie Mode</button>
-        </div>
-        <div>
-            <button id="reset">Reset</button>
-        </div>
-    </section>
+    <div class = "wrapper">
+        <canvas width="800" height="800" id="canvas"></canvas>
+        <section id="controls">
+            <div class="toggleBox">
+                <label class="switch">
+                    <input type="checkbox" id="wanderButton">
+                    <span class="slider round"></span>
+                </label>
+                <p>Chase Mode</p>
+            </div>
+            <div>
+                <div class="toggleBox">
+                    <label class="switch">
+                        <input type="checkbox" id="zombieMode">
+                        <span class="slider round"></span>
+                    </label>
+                    <p>Zombie Mode</p>
+                </div>            </div>
+            <div>
+                <button id="reset">Reset</button>
+            </div>
+            <div>
+                <button id="pausePlay">Pause/Play</button>
+            </div>
+            <div>
+                <button id="clear">Clear</button>
+            </div>
+            <div class="resizeBoxes">
+                <p>resize canvas</p>
+            </div>
+            <div class="slidecontainer">
+                <p>moveSpeed</p>
+                <input type="range" min="1" max="10" value="1" class="sliderInput" id="moveSpeed">
+            </div>
+            <div class="slidecontainer">
+                <p>detectionRange</p>
+                <input type="range" min="1" max="800" value="800" class="sliderInput" id="detectionRange">
+            </div>
+        </section>
+    </div>
 </body>
 </html>
