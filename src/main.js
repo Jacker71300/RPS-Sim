@@ -6,6 +6,7 @@ let canvasWidth = 800;
 let canvasHeight = 800;
 let numLoaded = 0;
 let currentMoveState = "seek";
+let paused = false;
 export let zombieMode = false;
 
 export function init(){
@@ -44,43 +45,48 @@ function SetUpInitialBoard(numToAdd){
 function loop(){
     requestAnimationFrame(loop);
 
-    //reset background (wipe frame)
-    ctx.save();
-    ctx.fillStyle = 'white';
-    ctx.fillRect(0,0,canvasWidth,canvasHeight);
-    ctx.restore();
+        if(!paused){
+        //reset background (wipe frame)
+        ctx.save();
+        ctx.fillStyle = 'white';
+        ctx.fillRect(0,0,canvasWidth,canvasHeight);
+        ctx.restore();
 
-    //loop through each list
-    //draw the mover
-    //then move it to prepare for next frame
-    for(let p = 0; p < utils.paperList.length; p++){
-        utils.paperList[p].Draw();
-        utils.paperList[p].Move();
+        //loop through each list
+        //draw the mover
+        //then move it to prepare for next frame
+        for(let p = 0; p < utils.paperList.length; p++){
+            utils.paperList[p].Draw();
+            utils.paperList[p].Move();
+        }
+
+        for(let r = 0; r < utils.rockList.length; r++){
+            utils.rockList[r].Draw();
+            utils.rockList[r].Move();
+        }
+
+        for(let s = 0; s < utils.scissorList.length; s++){
+            utils.scissorList[s].Draw();
+            utils.scissorList[s].Move();
+        }
+
+        utils.DetectCollisions();
     }
-
-    for(let r = 0; r < utils.rockList.length; r++){
-        utils.rockList[r].Draw();
-        utils.rockList[r].Move();
-    }
-
-    for(let s = 0; s < utils.scissorList.length; s++){
-        utils.scissorList[s].Draw();
-        utils.scissorList[s].Move();
-    }
-
-    utils.DetectCollisions();
 }
 
-function AddRandomMover(type){
+function AddRandomMover(type, num){
     //randomly assigns x and y value to new mover of specified type
     if(type == "paper"){
-        utils.paperList.push(new classes.Paper(ctx, Math.random() * 800, Math.random() * 800, 30, 30, 5, currentMoveState))
+        for(let i; i < num; i++)
+            utils.paperList.push(new classes.Paper(ctx, Math.random() * 800, Math.random() * 800, 30, 30, 5, currentMoveState))
     }
     else if(type == "rock"){
-        utils.rockList.push(new classes.Rock(ctx, Math.random() * 800, Math.random() * 800, 30, 30, 5, currentMoveState))
+        for(let i; i < num; i++)
+            utils.rockList.push(new classes.Rock(ctx, Math.random() * 800, Math.random() * 800, 30, 30, 5, currentMoveState))
     }
     else if(type == "scissors"){
-        utils.scissorList.push(new classes.Scissors(ctx, Math.random() * 800, Math.random() * 800, 30, 30, 5, currentMoveState))
+        for(let i; i < num; i++)
+            utils.scissorList.push(new classes.Scissors(ctx, Math.random() * 800, Math.random() * 800, 30, 30, 5, currentMoveState))
     }
 }
 
