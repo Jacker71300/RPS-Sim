@@ -1,7 +1,8 @@
 import * as classes from "./classes.js";
 import * as utils from "./utils.js";
 
-let ctx, canvas;
+let ctx;
+export let canvas;
 let canvasWidth = 800;
 let canvasHeight = 800;
 let numLoaded = 0;
@@ -26,9 +27,9 @@ export function init(){
     document.querySelector('#wanderButton').onclick = function(){ChangeSeekMode()};
     document.querySelector('#pausePlay').onclick = function(){paused = !paused};
     document.querySelector('#moveSpeed').onchange = function(){ChangeGlobalMoveSpeed(document.getElementById("moveSpeed").value)};
-    document.querySelector('#detectionRange').onchange = function(){utils.maxFindDistance = document.getElementById("detectionRange").value};
+    document.querySelector('#detectionRange').onchange = function(){utils.ChangeFindDistance(document.getElementById("detectionRange").value)};
     document.querySelector('#spawn').onclick = function(){AddRandomMovers(document.getElementById("spawnOptionsRandom").value, document.getElementById("numToSpawn").value)};
-    document.querySelector('#canvasResize').onchange = function(){canvas.width = document.getElementById("canvasX").value; canvas.height = document.getElementById("canvasY").value};
+    document.querySelector('#canvasResize').onclick = function(){UpdateCanvasSize()};
     canvas.onclick = canvasClicked;
 
     loop();
@@ -50,7 +51,6 @@ function SetUpInitialBoard(numToAdd){
 function loop(){
     requestAnimationFrame(loop);
 
-    11
     //reset background (wipe frame)
     ctx.save();
     ctx.fillStyle = 'white';
@@ -87,15 +87,15 @@ function AddRandomMovers(type, num){
     //randomly assigns x and y value to new mover of specified type
     if(type == "paper"){
         for(let i = 0; i < num; i++)
-            utils.paperList.push(new classes.Paper(ctx, Math.random() * canvas.width, Math.random() * canvas.height, 30, 30, globalMoveSpeed, currentMoveState))
+            utils.paperList.push(new classes.Paper(ctx, Math.random() * canvas.width, Math.random() * canvas.height, 30, 30, globalMoveSpeed, currentMoveState, canvas))
     }
     else if(type == "rock"){
         for(let i = 0; i < num; i++)
-            utils.rockList.push(new classes.Rock(ctx, Math.random() * canvas.width, Math.random() * canvas.height, 30, 30, globalMoveSpeed, currentMoveState))
+            utils.rockList.push(new classes.Rock(ctx, Math.random() * canvas.width, Math.random() * canvas.height, 30, 30, globalMoveSpeed, currentMoveState, canvas))
     }
     else if(type == "scissors"){
         for(let i = 0; i < num; i++)
-            utils.scissorList.push(new classes.Scissors(ctx, Math.random() * canvas.width, Math.random() * canvas.height, 30, 30, globalMoveSpeed, currentMoveState))
+            utils.scissorList.push(new classes.Scissors(ctx, Math.random() * canvas.width, Math.random() * canvas.height, 30, 30, globalMoveSpeed, currentMoveState, canvas))
     }
 }
 
@@ -152,18 +152,31 @@ function canvasClicked(e){
     let rect = e.target.getBoundingClientRect();
     let mouseX = e.clientX - rect.x;
     let mouseY = e.clientY - rect.y;
-    console.log(mouseX,mouseY);
     
     if(document.getElementById("spawnOptionsMouse").value == "paper"){
-        console.log("paper");
-        utils.paperList.push(new classes.Paper(ctx, mouseX, mouseY, 30, 30, globalMoveSpeed, currentMoveState));
+        utils.paperList.push(new classes.Paper(ctx, mouseX, mouseY, 30, 30, globalMoveSpeed, currentMoveState, canvas));
     }
     else if(document.getElementById("spawnOptionsMouse").value == "rock"){
-        console.log("rock");
-        utils.rockList.push(new classes.Rock(ctx, mouseX, mouseY, 30, 30, globalMoveSpeed, currentMoveState));
+        utils.rockList.push(new classes.Rock(ctx, mouseX, mouseY, 30, 30, globalMoveSpeed, currentMoveState, canvas));
     }
     else if(document.getElementById("spawnOptionsMouse").value == "scissors"){
-        console.log("scissors");
-        utils.scissorList.push(new classes.Scissors(ctx, mouseX, mouseY, 30, 30, globalMoveSpeed, currentMoveState));
+        utils.scissorList.push(new classes.Scissors(ctx, mouseX, mouseY, 30, 30, globalMoveSpeed, currentMoveState, canvas));
+    }
+}
+
+function UpdateCanvasSize(){
+    canvas.width = document.getElementById("canvasX").value;
+    canvas.height = document.getElementById("canvasY").value;
+
+    for(let i = 0; i < utils.paperList.length; i++){
+        utils.paperList[i].UpdateCanvasSize(canvas.width, canvas.height);
+    }
+        
+    for(let i = 0; i < utils.rockList.length; i++){
+        utils.rockList[i].UpdateCanvasSize(canvas.width, canvas.height);
+    }
+        
+    for(let i = 0; i < utils.scissorList.length; i++){
+        utils.scissorList[i].UpdateCanvasSize(canvas.width, canvas.height);
     }
 }

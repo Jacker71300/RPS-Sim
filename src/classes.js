@@ -2,7 +2,7 @@ import * as utils from "./utils.js";
 import * as init from "./init.js";
 
 class Mover{
-    constructor(ctx, x = 0, y = 0, width = 15, height = 15, moveSpeed = 5, moveState = "wander"){
+    constructor(ctx, x = 0, y = 0, width = 15, height = 15, moveSpeed = 5, moveState = "wander", canvas){
         this.ctx = ctx;
         this.x = x;
         this.y = y;
@@ -23,8 +23,8 @@ class Mover{
         this.currentDirection = {x:1, y:0};
 
         this.currentFPS = 1/60;
-        this.maxWidth = 800;
-        this.maxHeight = 800;
+        this.maxWidth = canvas.width;
+        this.maxHeight = canvas.height;
     }
 
     Move()
@@ -165,11 +165,16 @@ class Mover{
         this.ctx.drawImage(this.image, -this.width / 2, -this.height / 2, this.width, this.height);
         this.ctx.restore();
     }
+
+    UpdateCanvasSize(width, height){
+        this.maxWidth = width;
+        this.maxHeight = height;
+    }
 }
 
 export class Paper extends Mover{
-    constructor(ctx, x = 0, y = 0, width = 15, height = 15, moveSpeed = 5, moveState = "wander"){
-        super(ctx, x, y, width, height, moveSpeed, moveState);
+    constructor(ctx, x = 0, y = 0, width = 15, height = 15, moveSpeed = 5, moveState = "wander", canvas){
+        super(ctx, x, y, width, height, moveSpeed, moveState, canvas);
         this.image = utils.getPaperImage();
     }
 
@@ -205,8 +210,8 @@ export class Paper extends Mover{
 }
 
 export class Rock extends Mover{
-    constructor(ctx, x = 0, y = 0, width = 15, height = 15, moveSpeed = 5, moveState = "wander"){
-        super(ctx, x, y, width, height, moveSpeed, moveState);
+    constructor(ctx, x = 0, y = 0, width = 15, height = 15, moveSpeed = 5, moveState = "wander", canvas){
+        super(ctx, x, y, width, height, moveSpeed, moveState, canvas);
         this.image = utils.getRockImage();
     }
 
@@ -242,8 +247,8 @@ export class Rock extends Mover{
 }
 
 export class Scissors extends Mover{
-    constructor(ctx, x = 0, y = 0, width = 15, height = 15, moveSpeed = 5, moveState = "wander"){
-       super(ctx, x, y, width, height, moveSpeed, moveState);
+    constructor(ctx, x = 0, y = 0, width = 15, height = 15, moveSpeed = 5, moveState = "wander", canvas){
+       super(ctx, x, y, width, height, moveSpeed, moveState, canvas);
        this.image = utils.getScissorsImage();
     }
 
