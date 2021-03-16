@@ -17,7 +17,6 @@ canvas{
 }
 
 .toggleBox{
-    border: 1px solid black;
     width: 225px;
     display: inline-flex;
     flex-direction: row;
@@ -34,7 +33,6 @@ input{
 }
 
 .radioBox{
-    border: 1px solid black;
     width: 225px;
     display: inline-flex;
     flex-direction: row;

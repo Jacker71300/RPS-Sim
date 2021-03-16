@@ -33,8 +33,9 @@
                 <button id="clear">Clear</button>
             </div>
             <div class="resizeBoxes">
-                <button id="canvasResize">Resise Canvas <input type="number" id="canvasX" name="canvasX" value="800"> x  <input type="number" id="canvasY" name="canvasY" value="800">
-            </button>            </div>
+                <button id="canvasResize">Resize Canvas</button>
+                <input type="number" id="canvasX" name="canvasX" value="800"> x  <input type="number" id="canvasY" name="canvasY" value="800">            
+            </div>
             <div class="slidecontainer">
                 <p id="moveSpeedOutput">Move Speed: </p>
                 <input type="range" min="1" max="10" value="1" class="sliderInput" id="moveSpeed">
@@ -57,12 +58,12 @@
 
             </div>
             <div class="radioBox">
-                <button id="spawn">Spawn <input type="number" id="numToSpawn" name="spawnNumber" value="20"> <select name="spawnOptions" id="spawnOptionsRandom">
-                        <option value="rock">Rocks</option>
-                        <option value="paper">Papers</option>
-                        <option value="scissors">Scissors</option>
-                    </select>
-                </button>
+                <button id="spawn">Spawn</button>
+                <input type="number" id="numToSpawn" name="spawnNumber" value="20"> <select name="spawnOptions">
+                    <option value="Rock">Rocks</option>
+                    <option value="Paper">Papers</option>
+                    <option value="Scissors">Scissors</option>
+                </select>
             </div>
         </section>
     </div>
