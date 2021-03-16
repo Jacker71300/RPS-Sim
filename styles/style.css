@@ -60,10 +60,10 @@ input{
   .slider {
     position: absolute;
     cursor: pointer;
-    top: 12;
-    left: 0;
-    right: 0;
-    bottom: -12;
+    top: 12px;
+    left: 0px;
+    right: 0px;
+    bottom: -12px;
     background-color: #ccc;
     -webkit-transition: .4s;
     transition: .4s;
