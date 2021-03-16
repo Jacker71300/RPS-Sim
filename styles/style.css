@@ -1,6 +1,10 @@
+@font-face{
+    font-family: customFont;
+    src:url
+}
 .wrapper{
     display: grid;
-    grid-template-columns: 850px 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 850px 1fr;
 }
 
 #controls{

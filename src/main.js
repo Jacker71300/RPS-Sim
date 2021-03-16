@@ -168,6 +168,11 @@ function UpdateCanvasSize(){
     canvas.width = document.getElementById("canvasX").value;
     canvas.height = document.getElementById("canvasY").value;
 
+    if(canvas.height > 800) canvas.height = 800;
+    if(canvas.width > 800) canvas.width = 800;
+    if(canvas.height <= 100) canvas.height = 100;
+    if(canvas.width <= 100) canvas.width = 100;
+
     for(let i = 0; i < utils.paperList.length; i++){
         utils.paperList[i].UpdateCanvasSize(canvas.width, canvas.height);
     }
