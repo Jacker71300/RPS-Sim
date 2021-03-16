@@ -27,6 +27,7 @@ export function init(){
     document.querySelector('#wanderButton').onclick = function(){ChangeSeekMode()};
     document.querySelector('#pausePlay').onclick = function(){paused = !paused};
     document.querySelector('#moveSpeed').onchange = function(){ChangeGlobalMoveSpeed(document.getElementById("moveSpeed").value)};
+    //utils stores maxFindDistance, so the mutator had to be in that file
     document.querySelector('#detectionRange').onchange = function(){utils.ChangeFindDistance(document.getElementById("detectionRange").value)};
     document.querySelector('#spawn').onclick = function(){AddRandomMovers(document.getElementById("spawnOptionsRandom").value, document.getElementById("numToSpawn").value)};
     document.querySelector('#canvasResize').onclick = function(){UpdateCanvasSize()};
@@ -63,6 +64,9 @@ function loop(){
     for(let p = 0; p < utils.paperList.length; p++){
         utils.paperList[p].Draw();
         
+        //we always want them drawn, in case the user adds new movers while the game is paused
+        //but we still dont want them to move
+        //so we separayted the movement from the drawing with an if
         if(!paused)
             utils.paperList[p].Move();
     }
@@ -79,12 +83,13 @@ function loop(){
             utils.scissorList[s].Move();
     }
 
+    //when the game is paused, if two movers spawn too close to each other, they shouldnt get deleted until the user pressed play
     if(!paused)
         utils.DetectCollisions();
 }
 
 function AddRandomMovers(type, num){
-    //randomly assigns x and y value to new mover of specified type
+    //randomly assigns x and y value to new mover of specified type, num amount of times
     if(type == "paper"){
         for(let i = 0; i < num; i++)
             utils.paperList.push(new classes.Paper(ctx, Math.random() * canvas.width, Math.random() * canvas.height, 30, 30, globalMoveSpeed, currentMoveState, canvas))
@@ -100,6 +105,7 @@ function AddRandomMovers(type, num){
 }
 
 function ClearBoard(){
+    //check that all images are loaded
     if(numLoaded == 6)
     {
         // clear all 3 arrays
@@ -137,6 +143,8 @@ function ChangeSeekMode(){
 }
 
 function ChangeGlobalMoveSpeed(speed){
+    //change variable in main
+    //but also change the variable in all the movers
     globalMoveSpeed = speed;
         for(let i = 0; i < utils.paperList.length; i++)
             utils.paperList[i].moveSpeed = globalMoveSpeed;
@@ -165,9 +173,11 @@ function canvasClicked(e){
 }
 
 function UpdateCanvasSize(){
+    //first, change the actual canvas size
     canvas.width = document.getElementById("canvasX").value;
     canvas.height = document.getElementById("canvasY").value;
 
+    //next, tell all the movers about the change
     for(let i = 0; i < utils.paperList.length; i++){
         utils.paperList[i].UpdateCanvasSize(canvas.width, canvas.height);
     }

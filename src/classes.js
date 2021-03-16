@@ -153,6 +153,8 @@ class Mover{
     AvoidFriends(){}
 
     UpdateMoveState(){
+        //there are two move states
+        //this is the equivelant of changing a boolean, we just prefer them as strings
         if(this.moveState == "wander")
             this.moveState = "seek";
         else
@@ -167,6 +169,8 @@ class Mover{
     }
 
     UpdateCanvasSize(width, height){
+        ///the canvas size can be changed by the user
+        //this just makes sure that the mover doesn wander off the canvas
         this.maxWidth = width;
         this.maxHeight = height;
     }
